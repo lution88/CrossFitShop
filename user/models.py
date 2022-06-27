@@ -27,7 +27,7 @@ class User(AbstractBaseUser):
     username = models.CharField("사용자 계정", max_length=20, unique=True)
     password = models.CharField("비밀번호", max_length=200)
     fullname = models.CharField("이름", max_length=20)
-    email = models.CharField("이메일", max_length=30, unique=True)
+    email = models.EmailField("이메일", unique=True)
     phone = models.CharField("전화번호", max_length=30, unique=True)
     join_date = models.DateTimeField("가입일", auto_now_add=True)
 
@@ -52,3 +52,4 @@ class User(AbstractBaseUser):
 
     def __str__(self):
         return f'{self.username} / {self.email}'
+
