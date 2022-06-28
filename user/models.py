@@ -39,7 +39,7 @@ class User(AbstractBaseUser):
         ('판매자', 2),
         ('구매자', 3),
     )
-    permissions = models.CharField("권한", max_length=2, choices=PERMISSION_CHOICES)
+    permissions = models.CharField("권한", max_length=20, choices=PERMISSION_CHOICES)
 
     USERNAME_FILED = 'nickname'
 
