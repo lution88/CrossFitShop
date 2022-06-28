@@ -31,9 +31,15 @@ class User(AbstractBaseUser):
     phone = models.CharField("전화번호", max_length=30)
     join_date = models.DateTimeField("가입일", auto_now_add=True)
 
-
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
+
+    PERMISSION_CHOICES = (
+        ('admin', 1),
+        ('판매자', 2),
+        ('구매자', 3),
+    )
+    permissions = models.CharField("권한", max_length=2, choices=PERMISSION_CHOICES)
 
     USERNAME_FILED = 'nickname'
 
