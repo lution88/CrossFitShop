@@ -28,11 +28,11 @@ class User(AbstractBaseUser):
     password = models.CharField("비밀번호", max_length=200)
     fullname = models.CharField("이름", max_length=20)
     email = models.EmailField("이메일", unique=True)
-    phone = models.CharField("전화번호", max_length=30, unique=True)
+    phone = models.CharField("전화번호", max_length=30)
     join_date = models.DateTimeField("가입일", auto_now_add=True)
 
-    is_active = models.BooleanField(default=True)
 
+    is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
 
     USERNAME_FILED = 'nickname'
