@@ -1,5 +1,7 @@
 from django.urls import path, include
 
-urlpatterns = [
+from user.views import UserAPIView
 
+urlpatterns = [
+    path("", UserAPIView.as_view()),
 ]
