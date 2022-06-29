@@ -3,6 +3,12 @@ from rest_framework.serializers import ModelSerializer
 from product.models import Product, Review, Comment, Category, Wish
 
 
+class ReviewSerializer(ModelSerializer):
+    class Meta:
+        model = Review
+        fields = ["title", "content", "rate"]
+
+
 class ProductSerializer(ModelSerializer):
     class Meta:
         model = Product
