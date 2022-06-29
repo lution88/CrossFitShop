@@ -32,15 +32,6 @@ class UserApiView(APIView):
         return Response(user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-# class UserSignUpApiView(APIView):
-#     def post(self, request):
-#         user_serializer = UserSerializer(data=request.data)
-#         if user_serializer.is_valid():
-#             user_serializer.save()
-#             return Response(user_serializer.data, status=status.HTTP_200_OK)
-#         return Response(user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
 class UserLoginApiView(APIView):
     def post(self, request):
         username = request.data.get('username', '')
