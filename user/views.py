@@ -35,9 +35,7 @@ class UserApiView(APIView):
 class UserLoginApiView(APIView):
     def post(self, request):
         username = request.data.get('username', '')
-        print(username)
         password = request.data.get('password', '')
-        print(password)
 
         user = authenticate(request, username=username, password=password)
         if not user:
