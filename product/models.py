@@ -17,12 +17,12 @@ class Product(models.Model):
 
 
 class Review(models.Model):
-    user = models.ForeignKey(User, verbose_name="작성자", on_delete=models.CASCADE, related_name="review_user")
-    product = models.ForeignKey(Product, verbose_name="제품이름", on_delete=models.CASCADE, related_name="review_product")
+    user = models.ForeignKey(User, verbose_name="작성자", on_delete=models.SET_NULL, null=True, related_name="review_user")
+    product = models.ForeignKey(Product, verbose_name="제품이름", on_delete=models.SET_NULL, null=True, related_name="review_product")
     title = models.CharField("리뷰 제목", max_length=50)
     content = models.TextField("리뷰 내용")
     rate = models.IntegerField("제품 평점")
-    comment = models.ForeignKey('Comment', verbose_name="댓글", on_delete=models.CASCADE, related_name="review_comment")
+    comment = models.ForeignKey('Comment', verbose_name="댓글", on_delete=models.SET_NULL, null=True, related_name="review_comment")
 
     def __str__(self):
         return self.title
