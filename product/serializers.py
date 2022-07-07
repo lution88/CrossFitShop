@@ -34,11 +34,23 @@ class ProductSerializer(ModelSerializer):
         category = int(validated_data.pop('get_category')[0])
         product = Product(**validated_data)
         product.save()
-
+        print(category)
         product.category.add(category)
         product.save()
 
         return product
+
+    def update(self, instance, validated_data):
+        category = int(validated_data.pop('get_category')[0])
+
+        for key, value in validated_data.items():
+            setattr(instance, key, value)
+        instance.save()
+
+        instance.category.clear()
+        instance.category.add(category)
+        instance.save()
+        return instance
 
 
 class CommentSerializer(ModelSerializer):
@@ -48,10 +60,21 @@ class CommentSerializer(ModelSerializer):
 
 
 class ReviewSerializer(ModelSerializer):
-    comment = CommentSerializer()
+    def create(self, validated_data):
+        review = Review(**validated_data)
+        review.save()
+        return review
+
+    def update(self, instance, validated_data):
+        for key, value in validated_data.items():
+            setattr(instance, key, value)
+        instance.save()
+        return instance
+
+
     class Meta:
         model = Review
-        fields = ["title", "content", "rate", "comment"]
+        fields = ["title", "content", "rate"]
 
 
 class WishSerializer(ModelSerializer):

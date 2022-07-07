@@ -5,8 +5,8 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from product.models import Product, Category
-from product.serializers import ProductSerializer
+from product.models import Product, Category, Review
+from product.serializers import ProductSerializer, ReviewSerializer
 
 
 class ProductView(APIView):
@@ -37,9 +37,11 @@ class ProductView(APIView):
 
 class ReviewApiView(APIView):
     def get(self, request):
-        return Response()
+        reviews = ReviewSerializer(Review.objects.all(), many=True).data
+        return Response(reviews, status=status.HTTP_200_OK)
 
     def post(self, request):
+        reviews = ReviewSerializer
         return Response()
 
     def put(self, request, review_id):
