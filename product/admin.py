@@ -8,8 +8,12 @@ class ProductModelAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'price', 'size')
 
 
+class CategoryModelAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name')
+
+
 admin.site.register(Product, ProductModelAdmin)
 admin.site.register(Review)
-admin.site.register(Category)
+admin.site.register(Category, CategoryModelAdmin)
 admin.site.register(Comment)
 admin.site.register(Wish)
