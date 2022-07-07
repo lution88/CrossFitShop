@@ -5,7 +5,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from product.models import Product
+from product.models import Product, Category
 from product.serializers import ProductSerializer
 
 
@@ -16,14 +16,21 @@ class ProductView(APIView):
 
     def post(self, request):
         product_serializer = ProductSerializer(data=request.data)
-        print(product_serializer)
         if product_serializer.is_valid():
             product_serializer.save()
             return Response(product_serializer.data, status=status.HTTP_200_OK)
         return Response(product_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def put(self, request):
-        return Response({"message":"success"})
+    def put(self, request, product_id):
+        product = Product.objects.get(id=product_id)
+        product_serializer = ProductSerializer(product, data=request.data, partial=True)
+        if product_serializer.is_valid():
+            product_serializer.save()
+            return Response(product_serializer.data, status=status.HTTP_200_OK)
+        return Response(product_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request):
         return Response({"message":"success"})
+
+
+# class CategoryApiView(APIView):

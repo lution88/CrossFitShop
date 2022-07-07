@@ -34,12 +34,12 @@ class User(AbstractBaseUser):
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
 
-    PERMISSION_CHOICES = (
-        ('1', 'admin'),
-        ('2', '판매자'),
-        ('3', '구매자'),
-    )
-    permissions = models.CharField("권한", max_length=20, choices=PERMISSION_CHOICES)
+    # PERMISSION_CHOICES = (
+    #     ('1', 'admin'),
+    #     ('2', '판매자'),
+    #     ('3', '구매자'),
+    # )
+    # permissions = models.CharField("권한", max_length=20, choices=PERMISSION_CHOICES)
 
     USERNAME_FIELD = 'username'
 

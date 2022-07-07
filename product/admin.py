@@ -5,7 +5,7 @@ from .models import Product, Review, Comment, Category, Wish
 
 # Register your models here.
 class ProductModelAdmin(admin.ModelAdmin):
-    list_display = ('name', 'price', 'size')
+    list_display = ('id', 'name', 'price', 'size')
 
 
 admin.site.register(Product, ProductModelAdmin)

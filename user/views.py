@@ -1,4 +1,4 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render
 from rest_framework import status
 from rest_framework.response import Response
@@ -10,7 +10,8 @@ from user.models import User
 
 class UserApiView(APIView):
     def get(self, request):
-        user = UserSerializer(User.objects.all(), many=True).data
+        me = request.user
+        user = UserSerializer(me).data
         return Response(user, status=status.HTTP_200_OK)
 
     def post(self, request):
@@ -22,7 +23,6 @@ class UserApiView(APIView):
 
     def put(self, request):
         user = request.user
-        print(user)
         if user.is_anonymous:
             return Response({"error": "로그인 후 이용하세요"}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -42,3 +42,9 @@ class UserLoginApiView(APIView):
             return Response({"error": "로그인 실패"}, status=status.HTTP_400_BAD_REQUEST)
         login(request, user)
         return Response({"message": "로그인 성공"}, status=status.HTTP_200_OK)
+
+
+class UserLogoutView(APIView):
+    def get(self, request):
+        logout(request)
+        return Response({"message": "로그아웃 성공!"}, status=status.HTTP_200_OK)

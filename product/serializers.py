@@ -12,13 +12,16 @@ class WishSerializer(ModelSerializer):
 
 class CategorySerializer(ModelSerializer):
     same_category_products = serializers.SerializerMethodField()
-    def get_same_products(self, obj):
+
+    def get_same_category_products(self, obj):
         product_list = []
+        for product in obj.product_set.all():
+            product_list.append(product.name)
         return {"카테고리가 같은 제품들": [product_list]}
 
     class Meta:
         model = Category
-        fields = ["name", "product_list"]
+        fields = ["name", "same_category_products"]
 
 
 class CommentSerializer(ModelSerializer):
@@ -34,21 +37,23 @@ class ReviewSerializer(ModelSerializer):
 
 
 class ProductSerializer(ModelSerializer):
+    category = CategorySerializer(many=True, read_only=True)
+    get_category = serializers.ListField(required=False)
+
     class Meta:
         model = Product
-        fields = ['name','content','price','size','pro_img']
+        fields = ['name', 'content', 'price', 'size', 'pro_img', 'category', 'get_category']
         extra_kwargs = {
-            'pro_img': {"required":False},
-            'category': {"required":False}
+            'pro_img': {"required": False},
+            'category': {"required": False}
         }
 
     def create(self, validated_data):
-        product = Product(
-            name=validated_data['name'],
-            content=validated_data['content'],
-            price=validated_data['price'],
-            size=validated_data['size'],
-        )
+        category = int(validated_data.pop('get_category')[0])
+        product = Product(**validated_data)
+        product.save()
+
+        product.category.add(category)
         product.save()
 
         return product

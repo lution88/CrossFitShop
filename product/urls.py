@@ -6,5 +6,6 @@ from product.views import ProductView
 
 urlpatterns = [
     path('', ProductView.as_view()),
+    path('<int:product_id>/', ProductView.as_view()),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
