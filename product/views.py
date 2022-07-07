@@ -29,8 +29,21 @@ class ProductView(APIView):
             return Response(product_serializer.data, status=status.HTTP_200_OK)
         return Response(product_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request):
-        return Response({"message":"success"})
+    def delete(self, request, product_id):
+        product = Product.objects.get(id=product_id)
+        product.delete()
+        return Response({"message":"삭제 완료!!"})
 
 
-# class CategoryApiView(APIView):
+class ReviewApiView(APIView):
+    def get(self, request):
+        return Response()
+
+    def post(self, request):
+        return Response()
+
+    def put(self, request, review_id):
+        return Response()
+
+    def delete(self, request, review_id):
+        return Response()

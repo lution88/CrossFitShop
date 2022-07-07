@@ -4,12 +4,6 @@ from rest_framework.serializers import ModelSerializer
 from product.models import Product, Review, Comment, Category, Wish
 
 
-class WishSerializer(ModelSerializer):
-    class Meta:
-        model = Wish
-        fields = ["user", "product"]
-
-
 class CategorySerializer(ModelSerializer):
     same_category_products = serializers.SerializerMethodField()
 
@@ -22,18 +16,6 @@ class CategorySerializer(ModelSerializer):
     class Meta:
         model = Category
         fields = ["name", "same_category_products"]
-
-
-class CommentSerializer(ModelSerializer):
-    class Meta:
-        model = Comment
-        fields = ["content", ]
-
-
-class ReviewSerializer(ModelSerializer):
-    class Meta:
-        model = Review
-        fields = ["title", "content", "rate"]
 
 
 class ProductSerializer(ModelSerializer):
@@ -57,3 +39,21 @@ class ProductSerializer(ModelSerializer):
         product.save()
 
         return product
+
+
+class CommentSerializer(ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = ["content", ]
+
+
+class ReviewSerializer(ModelSerializer):
+    class Meta:
+        model = Review
+        fields = ["title", "content", "rate"]
+
+
+class WishSerializer(ModelSerializer):
+    class Meta:
+        model = Wish
+        fields = ["user", "product"]
