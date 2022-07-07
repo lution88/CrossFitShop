@@ -22,7 +22,7 @@ class Review(models.Model):
     title = models.CharField("리뷰 제목", max_length=50)
     content = models.TextField("리뷰 내용")
     rate = models.IntegerField("제품 평점")
-    comment = models.ForeignKey('Comment', verbose_name="댓글", on_delete=models.SET_NULL, null=True, related_name="review_comment")
+    # comment = models.ForeignKey('Comment', verbose_name="댓글", on_delete=models.SET_NULL, null=True, related_name="review_comment")
 
     def __str__(self):
         return self.title
@@ -31,6 +31,7 @@ class Review(models.Model):
 class Comment(models.Model):
     content = models.CharField("코멘트", max_length=250)
     user = models.ForeignKey(User, verbose_name="작성자", on_delete=models.CASCADE, related_name="comment_user")
+    review = models.ForeignKey(Review, verbose_name="리뷰", on_delete=models.SET_NULL, null=True, related_name="comment_review")
 
     def __str__(self):
         return f'{self.user}: {self.content[:15]}'

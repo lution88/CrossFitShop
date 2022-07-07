@@ -5,8 +5,8 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from product.models import Product, Category, Review
-from product.serializers import ProductSerializer, ReviewSerializer
+from product.models import Product, Category, Review, Comment
+from product.serializers import ProductSerializer, ReviewSerializer, CommentSerializer
 
 
 class ProductView(APIView):
@@ -69,3 +69,35 @@ class ReviewDetailApiView(APIView):
         review = Review.objects.get(id=review_id)
         review.delete()
         return Response({"message": "삭제가 완료되었습니다."})
+
+
+class CommentApiView(APIView):
+    def get(self, request, review_id):
+        comment_serializer = CommentSerializer(Comment.objects.filter(id=review_id), many=True)
+        return Response(comment_serializer.data, status=status.HTTP_200_OK)
+
+    def post(self, request, review_id):
+        user = request.user
+        review = Review.objects.get(id=review_id)
+        comment_serializer = CommentSerializer(data=request.data, context={'user': user, 'review':review})
+        if comment_serializer.is_valid():
+            comment_serializer.save()
+            return Response(comment_serializer.data, status=status.HTTP_200_OK)
+        return Response(comment_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def put(self, request, review_id, comment_id):
+        user = request.user
+        review = Review.objects.get(id=review_id)
+        comment = Comment.objects.get(id=comment_id, user=user.id, review=review.id)
+        comment_serializer = CommentSerializer(comment, data=request.data, partial=True)
+        if comment_serializer.is_valid():
+            comment_serializer.save()
+            return Response(comment_serializer.data, status=status.HTTP_200_OK)
+        return Response(comment_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, review_id, comment_id):
+        user = request.user
+        review = Review.objects.get(id=review_id)
+        comment = Comment.objects.get(id=comment_id, user=user.id, review=review.id)
+        comment.delete()
+        return Response({"message": "comment 삭제 완료"})

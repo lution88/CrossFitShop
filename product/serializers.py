@@ -53,12 +53,30 @@ class ProductSerializer(ModelSerializer):
 
 
 class CommentSerializer(ModelSerializer):
+    def create(self, validated_data):
+        comment = Comment(**validated_data)
+        comment.user = self.context['user']
+        comment.review = self.context['review']
+        comment.save()
+        return comment
+
+    def update(self, instance, validated_data):
+        for key, value in validated_data.items():
+            setattr(instance, key, value)
+        instance.save()
+        return instance
+
     class Meta:
         model = Comment
-        fields = ["content", ]
+        fields = ["id", "user", "review", "content"]
+        extra_kwargs = {
+            'user' : {'required':False}
+        }
 
 
 class ReviewSerializer(ModelSerializer):
+    comment_review = CommentSerializer(many=True, required=False)
+
     def create(self, validated_data):
         review = Review(**validated_data)
         review.user = self.context['user']
@@ -74,7 +92,7 @@ class ReviewSerializer(ModelSerializer):
 
     class Meta:
         model = Review
-        fields = ["user", "product", "title", "content", "rate"]
+        fields = ["user", "product", "title", "content", "rate", "comment_review"]
         extra_kwargs = {
             'comment': {"required": False},
         }
