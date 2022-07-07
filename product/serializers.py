@@ -48,9 +48,10 @@ class CommentSerializer(ModelSerializer):
 
 
 class ReviewSerializer(ModelSerializer):
+    comment = CommentSerializer()
     class Meta:
         model = Review
-        fields = ["title", "content", "rate"]
+        fields = ["title", "content", "rate", "comment"]
 
 
 class WishSerializer(ModelSerializer):
