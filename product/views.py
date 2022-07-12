@@ -101,3 +101,11 @@ class CommentApiView(APIView):
         comment = Comment.objects.get(id=comment_id, user=user.id, review=review.id)
         comment.delete()
         return Response({"message": "comment 삭제 완료"})
+
+
+class WishApiView(APIView):
+    def get(self, request, product_id):
+        user = request.user.id
+        product = Product.objects.get(id=product_id)
+        wish = WishSerializer()
+        return Response({"message":"좋아요!"})

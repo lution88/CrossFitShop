@@ -70,7 +70,7 @@ class CommentSerializer(ModelSerializer):
         model = Comment
         fields = ["id", "user", "review", "content"]
         extra_kwargs = {
-            'user' : {'required':False}
+            'user': {'required':False}
         }
 
 
