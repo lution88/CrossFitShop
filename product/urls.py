@@ -15,6 +15,6 @@ urlpatterns = [
     path('review/detail/<int:review_id>/comment/', CommentApiView.as_view()),
     path('review/detail/<int:review_id>/comment/<int:comment_id>/', CommentApiView.as_view()),
 
-    path('wish/', WishApiView.as_view())
+    path('wish/<int:product_id>/', WishApiView.as_view())
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

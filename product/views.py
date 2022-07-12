@@ -1,12 +1,12 @@
 from django.shortcuts import render
 
 # Create your views here.
-from rest_framework import status
+from rest_framework import status, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from product.models import Product, Category, Review, Comment
-from product.serializers import ProductSerializer, ReviewSerializer, CommentSerializer
+from product.models import Product, Category, Review, Comment, Wish
+from product.serializers import ProductSerializer, ReviewSerializer, CommentSerializer, WishSerializer
 
 
 class ProductView(APIView):
@@ -104,8 +104,21 @@ class CommentApiView(APIView):
 
 
 class WishApiView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
     def get(self, request, product_id):
-        user = request.user.id
+        user = request.user
         product = Product.objects.get(id=product_id)
-        wish = WishSerializer()
-        return Response({"message":"좋아요!"})
+        if not Wish.objects.filter(user=user, product=product):
+            wish = Wish.objects.create(user=user, product=product)
+            wish.save()
+            print(wish, "등록")
+            return Response(WishSerializer(wish).data, status=status.HTTP_200_OK)
+        else:
+            wish = Wish.objects.get(
+                user=user,
+                product=product
+            )
+            wish.delete()
+            print(wish, "삭제")
+            return Response({"message": "찜 삭제"})

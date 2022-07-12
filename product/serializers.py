@@ -24,7 +24,7 @@ class ProductSerializer(ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ['name', 'content', 'price', 'size', 'pro_img', 'category', 'get_category']
+        fields = ['id', 'name', 'content', 'price', 'size', 'pro_img', 'category', 'get_category']
         extra_kwargs = {
             'pro_img': {"required": False},
             'category': {"required": False}
@@ -99,6 +99,7 @@ class ReviewSerializer(ModelSerializer):
 
 
 class WishSerializer(ModelSerializer):
+
     class Meta:
         model = Wish
         fields = ["user", "product"]
