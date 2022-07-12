@@ -9,5 +9,5 @@ from rest_framework.permissions import BasePermission
 #
 #     def has_permission(self, request, view):
 #         user = request.user
-#         if request.method in self.SAFE_METHOD and user.permissions == 3 and :
+#         if request.method in self.SAFE_METHOD and user.is_seller == "False":
 #
