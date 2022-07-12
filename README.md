@@ -11,8 +11,21 @@
       구매자의 경우 구매하고 싶은 제품 조회, 찜, 구매 가능
       제품마다 판매자가 설정한 날짜동안만 제품 거래 가능.
 ---
-## API 명세서
-![img.png](img.png)
+## DATABASE 모델링
+<a href="https://www.figma.com/file/e2djlW5nxbh7JVixjTUVFn/%ED%81%AC%EB%A1%9C%EC%8A%A4%ED%95%8F_%EC%87%BC%ED%95%91%EB%AA%B0?node-id=0%3A1">![img.png](img.png)</a>
+---
+## 구현기능
+| `User`     |  `Product`   |`Review` |
+|------------|:------------:|-------------:|
+| - 유저 정보 조회 | - product 조회 |- review 조회 |
+| - 유저 회원 가입 | - product 생성 |- review 생성 |
+| - 유저 정보 수정 | - product 수정 |- review 수정 |
+| - 유저 정보 삭제 | - product 삭제 |- review 삭제 |
+| - 유저 로그인   | - wish(찜) 생성 |- comment 조회 |
+| - 유저 로그아웃  | - wish(찜) 삭제 |- comment 생성 |
+| -  |      -       |  - comment 수정 |
+| -  |      -       |  - comment 삭제 |
+
 ---
 ## 기술스택
 <p dir="auto">
