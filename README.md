@@ -12,8 +12,7 @@
       제품마다 판매자가 설정한 날짜동안만 제품 거래 가능.
 ---
 ## API 명세서
-<iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="800" height="450" src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Ffile%2Fe2djlW5nxbh7JVixjTUVFn%2F%25ED%2581%25AC%25EB%25A1%259C%25EC%258A%25A4%25ED%2595%258F_%25EC%2587%25BC%25ED%2595%2591%25EB%25AA%25B0%3Fnode-id%3D0%253A1" allowfullscreen></iframe>
-
+![img.png](img.png)
 ---
 ## 기술스택
 <p dir="auto">
