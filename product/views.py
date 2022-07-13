@@ -7,9 +7,12 @@ from rest_framework.views import APIView
 
 from product.models import Product, Category, Review, Comment, Wish
 from product.serializers import ProductSerializer, ReviewSerializer, CommentSerializer, WishSerializer
+from user.permissions import SellerCanWrite
 
 
 class ProductView(APIView):
+    permission_classes = [SellerCanWrite, permissions.IsAuthenticated]
+
     def get(self, request):
         product = ProductSerializer(Product.objects.all(), many=True).data
         return Response(product, status=status.HTTP_200_OK)
@@ -36,6 +39,8 @@ class ProductView(APIView):
 
 
 class ReviewApiView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
     def get(self, request):
         reviews = ReviewSerializer(Review.objects.all(), many=True).data
         return Response(reviews, status=status.HTTP_200_OK)
@@ -111,8 +116,7 @@ class WishApiView(APIView):
         product = Product.objects.get(id=product_id)
         if not Wish.objects.filter(user=user, product=product):
             wish = Wish.objects.create(user=user, product=product)
-            wish.save()
-            print(wish, "등록")
+            # print(wish, "등록")
             return Response(WishSerializer(wish).data, status=status.HTTP_200_OK)
         else:
             wish = Wish.objects.get(
@@ -120,5 +124,5 @@ class WishApiView(APIView):
                 product=product
             )
             wish.delete()
-            print(wish, "삭제")
+            # print(wish, "삭제")
             return Response({"message": "찜 삭제"})

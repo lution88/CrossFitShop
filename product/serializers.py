@@ -99,7 +99,6 @@ class ReviewSerializer(ModelSerializer):
 
 
 class WishSerializer(ModelSerializer):
-
     class Meta:
         model = Wish
         fields = ["user", "product"]
